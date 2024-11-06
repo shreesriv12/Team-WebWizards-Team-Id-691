@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="todolist.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <form id="task-form">
+            <input type="text" id="task-title" placeholder="Task Title" required>
+            <textarea id="task-details" placeholder="Detailed Explanation" required></textarea>
+            <input type="date" id="task-deadline" required>
+            <select id="task-genre">
+                <option value="Rock">Rock</option>
+                <option value="Pop Music">Pop Music</option>
+                <option value="Rhythm and Blues">Rhythm and Blues</option>
+                <option value="Jazz">Jazz</option>
+                <option value="Blues">Blues</option>
+                <option value="Hip Hop Music">Hip Hop Music</option>
+                <option value="Electronic Music">Electronic Music</option>
+                <option value="Country Music">Country Music</option>
+                <option value="Classical Music">Classical Music</option>
+                <option value="Salsa Music">Salsa Music</option>
+                <option value="Contemporary R&B">Contemporary R&B</option>
+                <option value="Dance Music">Dance Music</option>
+                <option value="Folk Music">Folk Music</option>
+                <option value="Indie Rock">Indie Rock</option>
+                <option value="Funk">Funk</option>
+                <option value="Hip Hop">Hip Hop</option>
+                <option value="Disco">Disco</option>
+                <option value="K Pop">K Pop</option>
+
+            </select>
+            <input type="number" id="task-priority" placeholder="Priority (1-5)" min="1" max="5" required>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="task-list"></ul>
+    </div>
+    <script src="todolist.js"></script>
+</body>
+</html>
