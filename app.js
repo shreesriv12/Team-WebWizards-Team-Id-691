@@ -59,4 +59,3 @@ function addNotes() {
             noteList.innerHTML += "<li>" + input + "<button id='delete'>clear</button> <span id='edit'>Edit</span></li>";
         }
 }
-
