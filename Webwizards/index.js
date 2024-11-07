@@ -2,13 +2,18 @@ import express from "express"; //express js
 import mongoose from "mongoose"; //database
 import dotenv from "dotenv";
 import path from "path";
-// import js from "./public/register.js"; 
+import cors from "cors";
 
 //server info
 let server = express();
 const PORT = 3000;
 //database 
-const URI = "mongodb://localhost:27017/";
+const URI = "mongodb://localhost:27017/User";
+
+//enabling CORS :
+server.use(cors());
+
+
 
 //importing files
 import Artist_route from "./route/Artist.route.js";
@@ -21,30 +26,28 @@ import bodyParser from "body-parser";
 server.use(express.json());
 dotenv.config();
 
+//connecting to database:
+try {
+  mongoose.connect(URI    
+    ,{ useNewUrlParser: true,
+    useUnifiedTopology: true}
+  )
+  console.log("connnected to MongoDb"); //successfully connected
+} catch (error) {
+  console.log("Error:", error); // error  in connecting
+}
+
 server.use(express.static('public'))
-server.use(bodyParser.json());
 
 // get and post requests:
 server.get("/todos",(req,res)=>{
   res.json(todos); 
 })
 server.get("/about", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/about.html");
+  //pending
 });
 server.get("/contact", (req, res) => {
-  res.sendFile();
-});
-server.get("/user/signup", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/register.html")
-});
-server.get("/user/signup", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/register.js")
-});
-
-server.get("/user/login", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/login.html")
-  // res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/login.css")
-  // res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/login.js")
+  //pending
 });
 
 // save data to the database
@@ -54,17 +57,12 @@ server.post('/user/signup', (req, res) => {
   res.send({ message: 'Data is successfully recieved!' });
 });
 
-//connecting to database:
-try {
-  mongoose.connect(URI);
-  console.log("connnected to MongoDb"); //successfully connected
-} catch (error) {
-  console.log("Error:", error); // error  in connecting
-}
+
 
 //Routers:
 server.use("/user",Artist_route);
 server.use("/todo", Todo_route);
+
 
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
