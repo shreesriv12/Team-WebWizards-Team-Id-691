@@ -1,71 +1,56 @@
-import express from "express"; //express js
-import mongoose from "mongoose"; //database
-import dotenv from "dotenv";
-import path from "path";
-// import js from "./public/register.js"; 
-
-//server info
-let server = express();
-const PORT = 3000;
-//database 
-const URI = "mongodb://localhost:27017/";
-
-//importing files
-import Artist_route from "./route/Artist.route.js";
-import Todo_route from "./route/Todo.route.js";
-import Todo from "./model/Todo.js";
-import { To_do } from "./controller/Todo.controller.js";
-import bodyParser from "body-parser";
-
-//json for server
-server.use(express.json());
-dotenv.config();
-
-server.use(express.static('public'))
-server.use(bodyParser.json());
-
-// get and post requests:
-server.get("/todos",(req,res)=>{
-  res.json(todos); 
-})
-server.get("/about", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/about.html");
-});
-server.get("/contact", (req, res) => {
-  res.sendFile();
-});
-server.get("/user/signup", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/register.html")
-});
-server.get("/user/signup", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/register.js")
-});
-
-server.get("/user/login", (req, res) => {
-  res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/login.html")
-  // res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/login.css")
-  // res.sendFile("C:/Users/LENOVO/Desktop/DiddysParty/public/login.js")
-});
-
-// save data to the database
-server.post('/user/signup', (req, res) => {
-  const userData = req.body;  // data from request-body 
-  console.log('user data:', userData);
-  res.send({ message: 'Data is successfully recieved!' });
-});
-
-//connecting to database:
-try {
-  mongoose.connect(URI);
-  console.log("connnected to MongoDb"); //successfully connected
-} catch (error) {
-  console.log("Error:", error); // error  in connecting
+import Artist from "../model/user.js";
+import bcryptjs from "bcryptjs";
+export const signup = async (req, res) => {
+  try {
+    // const {Fullname,email,Password,confirmPassword} = await req.body;
+    const {Fullname,email,Password,confirmPassword} = await req.body;
+    const artist = await Artist.findOne({ email });
+    if (artist) {
+      return res.status(400).json({ message: "User already exists" }); //returns the value and work hi done!
+    }
+    const hashPassword = await bcryptjs.hash(Password,10);
+    const RegisteredArtist = await new Artist({
+      Fullname:Fullname,
+      email:email,
+      Password:hashPassword,
+      confirmPassword:confirmPassword
+      // confirmPassword: confirmPassword
+    });
+    await RegisteredArtist.save();
+    res.status(200).render(index).json({message: "User registered successfully",Artist:{
+      _id:RegisteredArtist._id,
+      Fullname: RegisteredArtist.Fullname,
+      email: RegisteredArtist.email,
+    }})
+  } 
+  catch (error) {
+    console.log("Error", error.message);
+    res.status(500).json({message :"server error"});
+  }
+  
+};
+export const login = async (req,res)=> {
+  try{
+    const {email,Password} = req.body;
+    const artist =await Artist.findOne({email});
+    const pass_same =await bcryptjs.compare(Password,artist.Password) 
+  
+    if(!artist){
+      return res.status(400).json({message:"invalid email or signup if new here"}) }
+    else if(!pass_same){
+      return res.status(400).json({message:"Incorrect Password"})
+                 }
+    else{
+      return res.status(200).json({message:"Login Successful",artist:{
+        _id: artist._id ,//for frontend..we declared artist for finding email so it's for that specific user
+        Fullname: artist.Fullname,
+        email: artist.email}
+           })
+        }
+    }
+    
+  catch(error){
+    console.log(error.message);
+    res.status(500).json({message: "Internal server error"})
+           }
 }
-
-//Routers:
-server.use("/user",Artist_route);
-server.use("/todo", Todo_route);
-
-server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`)
-})
