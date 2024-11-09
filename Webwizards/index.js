@@ -1,9 +1,5 @@
 import Artist from "../model/user.js";
 import bcryptjs from "bcryptjs";
-<<<<<<< HEAD
-=======
-
->>>>>>> 36e4911f5ad281b47389235fdc564088f227e30c
 export const signup = async (req, res) => {
   try {
     // const {Fullname,email,Password,confirmPassword} = await req.body;
@@ -13,10 +9,6 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "User already exists" }); //returns the value and work hi done!
     }
     const hashPassword = await bcryptjs.hash(Password,10);
-<<<<<<< HEAD
-=======
-
->>>>>>> 36e4911f5ad281b47389235fdc564088f227e30c
     const RegisteredArtist = await new Artist({
       Fullname:Fullname,
       email:email,
