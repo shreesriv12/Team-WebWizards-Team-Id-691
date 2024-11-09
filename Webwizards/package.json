@@ -1,9 +1,10 @@
 {
   "name": "diddysparty",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
+      "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "WebWizards",
@@ -17,5 +18,12 @@
     "express": "^4.21.1",
     "mongoose": "^8.8.0",
     "nodemon": "^3.1.7"
-  }
+  },
+	"folders": [
+		{
+			"name": "Team-WebWizards-Team-Id-691",
+			"path": ".."
+		}
+	],
+	"settings": {}
 }
