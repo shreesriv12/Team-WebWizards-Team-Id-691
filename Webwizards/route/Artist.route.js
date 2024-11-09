@@ -19,11 +19,12 @@ router.get('/login', (req, res) => {
       const htmlFilePath = path.join(process.cwd(), 'public', 'login.html');  // Get absolute path
       res.sendFile(htmlFilePath, (err) => {
         if (err) {
-           res.status(500).send('Error in sending the HTML file');
-                    }
-                                                                 });
-                                                                      });
+   res.status(500).send('Error in sending the HTML file');
+   }
+}); 
+});
+
    router.post("/signup",signup);  //signup is our function defined in controller : user.controller.js
    router.post("/login",login);   //login function is defined in controller : user.controller.js
+
 export default router;
-                                                                      
