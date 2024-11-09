@@ -23,7 +23,7 @@ router.get('/login', (req, res) => {
                     }
                                                                  });
                                                                       });
-                                                                      router.post("/signup",signup);  //signup is our function defined in controller : user.controller.js
-                                                                      router.post("/login",login);   //login function is defined in controller : user.controller.js
-                                                                      export default router;
+   router.post("/signup",signup);  //signup is our function defined in controller : user.controller.js
+   router.post("/login",login);   //login function is defined in controller : user.controller.js
+export default router;
                                                                       
