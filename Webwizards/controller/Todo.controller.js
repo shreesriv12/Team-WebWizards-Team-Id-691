@@ -4,11 +4,10 @@ try{
     const {Task_Title, Description, Label, Deadline, Priority, Done} = await req.body;
     const registeredTodo = new Todo ({
         Task_Title: Task_Title,
-        Description:Description,
-        Label:Label,
         Deadline: Deadline,
+        Description:Description,
+        Genre:Genre,
         Priority:Priority,
-        Done:Done,
 
     });
     await registeredTodo.save();
