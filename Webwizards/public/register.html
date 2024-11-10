@@ -115,7 +115,7 @@ registrationForm.addEventListener('submit', (e) => {
     }
     console.log(Fullname, email, Password, confirmPassword);
 
-    if (password !== confirmPassword) {
+    if (Password !== confirmPassword) {
         document.getElementById('error-message').innerHTML = 'Passwords do not match.';
         return;
     }
